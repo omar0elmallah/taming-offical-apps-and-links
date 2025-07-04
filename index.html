@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-      /* الأساسيات */
+    
       :root {
           --primary-color: #3498db;
           --secondary-color: #2ecc71;
@@ -33,7 +33,7 @@
           direction: rtl;
       }
 
-      /* شريط التنقل */
+     
       .navbar {
           background: white;
           box-shadow: var(--box-shadow);
@@ -117,7 +117,7 @@
           padding: 0.5rem;
       }
 
-      /* القسم الرئيسي */
+   
       .hero {
           text-align: center;
           padding: 4rem 1rem;
@@ -443,7 +443,6 @@
 </head>
 
 <body>
-    <!-- شريط التنقل -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo">
@@ -463,7 +462,6 @@
         </div>
     </nav>
 
-    <!-- المحتوى الرئيسي -->
     <main>
         <header class="hero">
             <h1>welcome to <span>TAMING</span></h1>
@@ -487,12 +485,10 @@
             </div>
             
             <div class="apps-grid" id="appsGrid">
-                <!-- سيتم إضافة التطبيقات عبر JavaScript -->
             </div>
         </section>
     </main>
 
-    <!-- تذييل الصفحة -->
     <footer>
         <div class="footer-content">
             <div class="footer-logo">
@@ -526,60 +522,57 @@
 
     <script>
       document.addEventListener('DOMContentLoaded', function() {
-      // بيانات التطبيقات
                 const apps = [
                     {
                         name: "Nexus AI 2.0.1",
-                        url: "https://example.com/hr",
+                        url: "https://omarelmallah.pythonanywhere.com/",
                         icon: "fas fa-star",
                         category: "AI",
                         description: "use new modele of nexus taming`s ai"
                     },
                     {
                         name: "study planner",
-                        url: "https://example.com/finance",
+                        url: "https://omar0elmallah.github.io/study-planner/",
                         icon: "fas fa-clock",
                         category: "productivity",
                         description: "make a plan for your study and make time tables"
                     },
                     {
                         name: "Nexus AI 1.5",
-                        url: "https://example.com/projects",
+                        url: "https://omar0elmallah.github.io/ai/",
                         icon: "fas fa-cloud",
                         category: "AI",
                         description: "Try the last ver. of our ai"
                     },
                     {
                         name: "DOVERTOR App",
-                        url: "https://example.com/mail",
+                        url: "https://omar0elmallah.github.io/dovertor/",
                         icon: "fas fa-file",
                         category: "productivity",
                         description: "convert you files easly with this tool"
                     },
                     {
                         name: "hen jumping",
-                        url: "https://example.com/reports",
+                        url: "https://omar0elmallah.github.io/hen-jump/",
                         icon: "fas fa-cat",
                         category: "gaming",
                         description: "play crossy road with modern way"
                     },
                     {
                         name: "DivHub blog",
-                        url: "https://example.com/training",
+                        url: "https://devhub-arabic.blogspot.com/",
                         icon: "fas fa-users",
                         category: "media",
                         description: "your tech blog"
                     }
                 ];
 
-        // عناصر DOM
         const appsGrid = document.getElementById('appsGrid');
         const tabButtons = document.querySelectorAll('.tab-btn');
         const searchInput = document.querySelector('.search-box input');
         const hamburger = document.getElementById('hamburger');
         const navLinks = document.getElementById('navLinks');
 
-        // عرض التطبيقات
         function displayApps(filter = 'all', searchTerm = '') {
             appsGrid.innerHTML = '';
             
@@ -614,11 +607,10 @@
             });
         }
 
-        // تحويل رمز التصنيف إلى اسم
         function getCategoryName(category) {
             const categories = {
                 'AI': 'AI',
-                'finance': 'المالية',
+                
                 'productivity': 'productivity',
                 'gaming': 'Gaming',
                 'media':'Media'
@@ -626,7 +618,6 @@
             return categories[category] || category;
         }
 
-        // تصفية التطبيقات حسب التصنيف
         tabButtons.forEach(button => {
             button.addEventListener('click', () => {
                 tabButtons.forEach(btn => btn.classList.remove('active'));
@@ -636,21 +627,19 @@
             });
         });
 
-        // البحث عن التطبيقات
         searchInput.addEventListener('input', () => {
             const activeTab = document.querySelector('.tab-btn.active');
             const category = activeTab ? activeTab.dataset.category : 'all';
             displayApps(category, searchInput.value);
         });
 
-        // تبديل قائمة التنقل على الأجهزة المحمولة
         hamburger.addEventListener('click', () => {
             navLinks.classList.toggle('active');
             hamburger.innerHTML = navLinks.classList.contains('active') ? 
                 '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
         });
 
-        // إغلاق القائمة عند النقر على رابط
+        
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', () => {
                 if (window.innerWidth <= 992) {
@@ -660,7 +649,7 @@
             });
         });
 
-        // عرض التطبيقات عند التحميل
+      
         displayApps();
     });
     
