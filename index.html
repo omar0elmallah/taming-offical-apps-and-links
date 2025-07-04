@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAMING | HOME PAGE </title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+      /* الأساسيات */
+      :root {
+          --primary-color: #3498db;
+          --secondary-color: #2ecc71;
+          --dark-color: #2c3e50;
+          --light-color: #ecf0f1;
+          --gradient: linear-gradient(135deg, #3498db, #2ecc71);
+          --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          --transition: all 0.3s ease;
+      }
+
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+      }
+
+      body {
+          font-family: 'Tajawal', sans-serif;
+          background-color: #f5f7fa;
+          color: #333;
+          line-height: 1.6;
+          direction: rtl;
+      }
+
+      /* شريط التنقل */
+      .navbar {
+          background: white;
+          box-shadow: var(--box-shadow);
+          position: sticky;
+          top: 0;
+          z-index: 1000;
+          padding: 0.5rem 0;
+      }
+
+      .nav-container {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 1rem;
+      }
+
+      .logo {
+          display: flex;
+          align-items: center;
+      }
+
+      .logo-text {
+          font-size: 1.8rem;
+          font-weight: 700;
+          background: var(--gradient);
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+      }
+
+      .nav-links {
+          display: flex;
+          align-items: center;
+          transition: var(--transition);
+      }
+
+      .nav-link {
+          text-decoration: none;
+          color: var(--dark-color);
+          padding: 0.8rem 1rem;
+          margin: 0 0.2rem;
+          font-weight: 500;
+          transition: var(--transition);
+          border-radius: 4px;
+          display: flex;
+          align-items: center;
+      }
+
+      .nav-link i {
+          margin-left: 5px;
+      }
+
+      .nav-link:hover {
+          color: var(--primary-color);
+          background-color: rgba(52, 152, 219, 0.1);
+      }
+
+      .cta-button {
+          background: var(--gradient);
+          color: white !important;
+          margin-right: 1rem !important;
+      }
+
+      .cta-button:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+          background: linear-gradient(135deg, #2980b9, #27ae60);
+      }
+
+      .hamburger {
+          display: none;
+          background: none;
+          border: none;
+          font-size: 1.5rem;
+          color: var(--dark-color);
+          cursor: pointer;
+          padding: 0.5rem;
+      }
+
+      /* القسم الرئيسي */
+      .hero {
+          text-align: center;
+          padding: 4rem 1rem;
+          background: var(--gradient);
+          color: white;
+          margin-bottom: 2rem;
+      }
+
+      .hero h1 {
+          font-size: 2.5rem;
+          margin-bottom: 1rem;
+      }
+
+      .hero h1 span {
+          font-weight: 700;
+      }
+
+      .hero p {
+          font-size: 1.2rem;
+          margin-bottom: 2rem;
+      }
+
+      .search-box {
+          display: flex;
+          max-width: 600px;
+          margin: 0 auto;
+          
+      }
+
+      .search-box input {
+          flex: 1;
+          padding: 0.8rem 1rem;
+          border: none;
+          border-radius: 0px 13px 13px 0;
+          font-size: 1.1rem;
+      }
+
+      .search-box button {
+          background: var(--dark-color);
+          color: white;
+          border: none;
+          padding: 0 1.2rem;
+          border-radius: 13px 0 0 13px;
+          cursor: pointer;
+          transition: var(--transition);
+      }
+
+      .search-box button:hover {
+          background: #4c5864;
+      }
+      .search-box button:active {
+          background: #000000;
+      }
+
+      /* قسم التطبيقات */
+      .apps-section {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 1rem 3rem;
+      }
+
+      .apps-section h2 {
+          text-align: center;
+          margin-bottom: 2rem;
+          color: var(--dark-color);
+          font-size: 2rem;
+      }
+
+      .category-tabs {
+          display: flex;
+          justify-content: center;
+          margin-bottom: 2rem;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+      }
+
+      .tab-btn {
+          padding: 0.5rem 1.2rem;
+          background: white;
+          border: 1px solid #ddd;
+          border-radius: 20px;
+          cursor: pointer;
+          transition: var(--transition);
+          font-family: 'Tajawal', sans-serif;
+          font-weight: 500;
+      }
+
+      .tab-btn:hover {
+          background: #f0f0f0;
+      }
+
+      .tab-btn.active {
+          background: var(--gradient);
+          color: white;
+          border-color: transparent;
+      }
+
+      .apps-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+          gap: 1.5rem;
+      }
+
+      .app-card {
+          background: white;
+          border-radius: 8px;
+          overflow: hidden;
+          box-shadow: var(--box-shadow);
+          transition: var(--transition);
+          text-decoration: none;
+          color: var(--dark-color);
+      }
+
+      .app-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .app-icon {
+          height: 120px;
+          background: #f8f9fa;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 2.5rem;
+          color: var(--primary-color);
+      }
+
+      .app-info {
+          padding: 1.2rem;
+      }
+
+      .app-info h3 {
+          margin-bottom: 0.5rem;
+      }
+
+      .app-info p {
+          color: #666;
+          font-size: 0.9rem;
+          margin-bottom: 1rem;
+      }
+
+      .app-category {
+          display: inline-block;
+          padding: 0.2rem 0.6rem;
+          background: #e8f4fc;
+          color: var(--primary-color);
+          border-radius: 4px;
+          font-size: 0.8rem;
+          font-weight: 500;
+      }
+
+      /* تذييل الصفحة */
+      footer {
+          background: var(--dark-color);
+          color: white;
+          padding: 3rem 0 0;
+      }
+
+      .footer-content {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 1rem;
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 2rem;
+      }
+
+      .footer-logo .logo-text {
+          font-size: 1.8rem;
+          margin-bottom: 0.5rem;
+          display: block;
+      }
+
+      .footer-links {
+          display: flex;
+          flex-direction: column;
+      }
+
+      .footer-links h3, .footer-contact h3 {
+          font-size: 1.2rem;
+          margin-bottom: 1rem;
+          position: relative;
+          padding-bottom: 0.5rem;
+      }
+
+      .footer-links h3::after, .footer-contact h3::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          width: 50px;
+          height: 2px;
+          background: var(--gradient);
+      }
+
+      .footer-links a {
+          color: #ddd;
+          text-decoration: none;
+          margin-bottom: 0.5rem;
+          transition: var(--transition);
+      }
+
+      .footer-links a:hover {
+          color: white;
+          padding-right: 5px;
+      }
+
+      .footer-contact p {
+          margin-bottom: 0.8rem;
+          display: flex;
+          align-items: center;
+      }
+
+      .footer-contact i {
+          margin-left: 8px;
+      }
+
+      .social-icons {
+          display: flex;
+          gap: 1rem;
+          margin-top: 1rem;
+      }
+
+      .social-icons a {
+          color: white;
+          font-size: 1.2rem;
+          transition: var(--transition);
+      }
+
+      .social-icons a:hover {
+          transform: translateY(-3px);
+          color: var(--secondary-color);
+      }
+
+      .copyright {
+          text-align: center;
+          padding: 1.5rem;
+          margin-top: 2rem;
+          border-top: 1px solid rgba(255, 255, 255, 0.1);
+          font-size: 0.9rem;
+          color: #aaa;
+      }
+
+      /* تصميم متجاوب */
+      @media (max-width: 992px) {
+          .nav-links {
+              position: fixed;
+              top: 70px;
+              right: -100%;
+              width: 80%;
+              max-width: 300px;
+              height: calc(100vh - 70px);
+              background: white;
+              flex-direction: column;
+              align-items: flex-start;
+              padding: 1rem;
+              box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+              transition: var(--transition);
+          }
+          
+          .nav-links.active {
+              right: 0;
+          }
+          
+          .nav-link {
+              width: 100%;
+              margin: 0.5rem 0;
+              padding: 1rem;
+              border-radius: 4px;
+              background: #f8f9fa;
+          }
+          
+          .cta-button {
+              margin-right: 0 !important;
+              margin-top: 1rem;
+              width: 100%;
+              text-align: center;
+              justify-content: center;
+          }
+          
+          .hamburger {
+              display: block;
+          }
+          
+          .hero h1 {
+              font-size: 2rem;
+          }
+      }
+
+      @media (max-width: 768px) {
+          .apps-grid {
+              grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+          }
+          
+          .hero {
+              padding: 3rem 1rem;
+          }
+      }
+
+      @media (max-width: 576px) {
+          .logo-text {
+              font-size: 1.5rem;
+          }
+          
+          .hero h1 {
+              font-size: 1.8rem;
+          }
+          
+          .hero p {
+              font-size: 1rem;
+          }
+          
+          .apps-grid {
+              grid-template-columns: 1fr;
+          }
+          
+          .category-tabs {
+              justify-content: flex-start;
+          }
+      }
+    </style>
+</head>
+
+<body>
+    <!-- شريط التنقل -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-text">TAMING</span>
+            </div>
+            
+            <div class="nav-links" id="navLinks">
+                <a href="https://omar0elmallah.github.io/tamce/" class="nav-link"><i class="fas fa-users"></i> Community</a>
+                <a href="https://devhub-arabic.blogspot.com/" class="nav-link"><i class="fas fa-blog"></i> Blog</a>
+                <a href="https://omarelmallah.pythonanywhere.com/" class="nav-link"><i class="fas fa-robot"></i> AI Tools</a>
+                <a href="https://omar0elmallah.github.io/contact/" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
+            </div>
+            
+            <button class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- المحتوى الرئيسي -->
+    <main>
+        <header class="hero">
+            <h1>welcome to <span>TAMING</span></h1>
+            <p>your gate for all taming apps</p>
+            <div class="search-box">
+                <input type="text" placeholder="search for any app....">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+        </header>
+
+        <section class="apps-section">
+            <h2>Our apps</h2>
+            <div class="category-tabs">
+                <button class="tab-btn active" data-category="all">All</button>
+                <button class="tab-btn" data-category="AI">AI</button>
+                <button class="tab-btn" data-category="gaming">Gaming</button>
+                <button class="tab-btn" data-category="media">Media</button>
+
+
+                <button class="tab-btn" data-category="productivity">productivity</button>
+            </div>
+            
+            <div class="apps-grid" id="appsGrid">
+                <!-- سيتم إضافة التطبيقات عبر JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <!-- تذييل الصفحة -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <span class="logo-text">TAMING</span>
+                <p>all apps and links for you</p>
+            </div>
+            
+            <div class="footer-links">
+                <h3><i class="fas fa-link"></i>   |    Fast links</h3>
+                <a href="#">الشروط والأحكام</a>
+                <a href="#">سياسة الخصوصية</a>
+                <a href="#">الأسئلة الشائعة</a>
+            </div>
+            
+            <div class="footer-contact">
+                <h3><i class="fas fa-mobile"></i>contact</h3>
+                <p><i class="fas fa-envelope"></i>omar.elmallah2001@gmail.com</p>
+                <p><i class="fas fa-phone"></i> phone number not avliable now</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; all  copy  writes reseved taming 2025 </p>
+        </div>
+    </footer>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+      // بيانات التطبيقات
+                const apps = [
+                    {
+                        name: "Nexus AI 2.0.1",
+                        url: "https://example.com/hr",
+                        icon: "fas fa-star",
+                        category: "AI",
+                        description: "use new modele of nexus taming`s ai"
+                    },
+                    {
+                        name: "study planner",
+                        url: "https://example.com/finance",
+                        icon: "fas fa-clock",
+                        category: "productivity",
+                        description: "make a plan for your study and make time tables"
+                    },
+                    {
+                        name: "Nexus AI 1.5",
+                        url: "https://example.com/projects",
+                        icon: "fas fa-cloud",
+                        category: "AI",
+                        description: "Try the last ver. of our ai"
+                    },
+                    {
+                        name: "DOVERTOR App",
+                        url: "https://example.com/mail",
+                        icon: "fas fa-file",
+                        category: "productivity",
+                        description: "convert you files easly with this tool"
+                    },
+                    {
+                        name: "hen jumping",
+                        url: "https://example.com/reports",
+                        icon: "fas fa-cat",
+                        category: "gaming",
+                        description: "play crossy road with modern way"
+                    },
+                    {
+                        name: "DivHub blog",
+                        url: "https://example.com/training",
+                        icon: "fas fa-users",
+                        category: "media",
+                        description: "your tech blog"
+                    }
+                ];
+
+        // عناصر DOM
+        const appsGrid = document.getElementById('appsGrid');
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const searchInput = document.querySelector('.search-box input');
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+
+        // عرض التطبيقات
+        function displayApps(filter = 'all', searchTerm = '') {
+            appsGrid.innerHTML = '';
+            
+            const filteredApps = apps.filter(app => {
+                const categoryMatch = filter === 'all' || app.category === filter;
+                const searchMatch = app.name.includes(searchTerm) || 
+                                  app.description.includes(searchTerm);
+                return categoryMatch && searchMatch;
+            });
+            
+            if (filteredApps.length === 0) {
+                appsGrid.innerHTML = '<p class="no-results">لا توجد تطبيقات متطابقة مع بحثك</p>';
+                return;
+            }
+            
+            filteredApps.forEach(app => {
+                const appCard = document.createElement('a');
+                appCard.href = app.url;
+                appCard.className = 'app-card';
+                appCard.target = '_blank';
+                appCard.innerHTML = `
+                    <div class="app-icon">
+                        <i class="${app.icon}"></i>
+                    </div>
+                    <div class="app-info">
+                        <h3>${app.name}</h3>
+                        <p>${app.description}</p>
+                        <span class="app-category">${getCategoryName(app.category)}</span>
+                    </div>
+                `;
+                appsGrid.appendChild(appCard);
+            });
+        }
+
+        // تحويل رمز التصنيف إلى اسم
+        function getCategoryName(category) {
+            const categories = {
+                'AI': 'AI',
+                'finance': 'المالية',
+                'productivity': 'productivity',
+                'gaming': 'Gaming',
+                'media':'Media'
+            };
+            return categories[category] || category;
+        }
+
+        // تصفية التطبيقات حسب التصنيف
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                const category = button.dataset.category;
+                displayApps(category, searchInput.value);
+            });
+        });
+
+        // البحث عن التطبيقات
+        searchInput.addEventListener('input', () => {
+            const activeTab = document.querySelector('.tab-btn.active');
+            const category = activeTab ? activeTab.dataset.category : 'all';
+            displayApps(category, searchInput.value);
+        });
+
+        // تبديل قائمة التنقل على الأجهزة المحمولة
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.innerHTML = navLinks.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+
+        // إغلاق القائمة عند النقر على رابط
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 992) {
+                    navLinks.classList.remove('active');
+                    hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+                }
+            });
+        });
+
+        // عرض التطبيقات عند التحميل
+        displayApps();
+    });
+    
+    </script>
+</body>
+</html>
