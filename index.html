@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TAMING | HOME PAGE </title>
+    <title>TAMING | HOME PAGE</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Add SweetAlert2 for beautiful alerts -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <style>
     
       :root {
@@ -439,6 +441,255 @@
               justify-content: flex-start;
           }
       }
+
+      /* Auth Modal Styles */
+      .auth-modal {
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.5);
+          z-index: 2000;
+          justify-content: center;
+          align-items: center;
+      }
+
+      .auth-container {
+          background-color: white;
+          border-radius: 8px;
+          width: 90%;
+          max-width: 400px;
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+          overflow: hidden;
+          animation: modalFadeIn 0.3s;
+      }
+
+      @keyframes modalFadeIn {
+          from { opacity: 0; transform: translateY(-20px); }
+          to { opacity: 1; transform: translateY(0); }
+      }
+
+      .auth-header {
+          background: var(--gradient);
+          color: white;
+          padding: 1.5rem;
+          text-align: center;
+          position: relative;
+      }
+
+      .auth-header h2 {
+          margin: 0;
+          font-size: 1.5rem;
+      }
+
+      .close-modal {
+          position: absolute;
+          top: 1rem;
+          left: 1rem;
+          background: none;
+          border: none;
+          color: white;
+          font-size: 1.5rem;
+          cursor: pointer;
+      }
+
+      .auth-tabs {
+          display: flex;
+          border-bottom: 1px solid #eee;
+      }
+
+      .auth-tab {
+          flex: 1;
+          padding: 1rem;
+          text-align: center;
+          cursor: pointer;
+          transition: var(--transition);
+          font-weight: 500;
+      }
+
+      .auth-tab.active {
+          color: var(--primary-color);
+          border-bottom: 2px solid var(--primary-color);
+      }
+
+      .auth-content {
+          padding: 1.5rem;
+      }
+
+      .auth-form {
+          display: none;
+      }
+
+      .auth-form.active {
+          display: block;
+      }
+
+      .form-group {
+          margin-bottom: 1rem;
+      }
+
+      .form-group label {
+          display: block;
+          margin-bottom: 0.5rem;
+          font-weight: 500;
+      }
+
+      .form-group input {
+          width: 100%;
+          padding: 0.8rem;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          font-family: 'Tajawal', sans-serif;
+      }
+
+      .auth-btn {
+          width: 100%;
+          padding: 0.8rem;
+          background: var(--gradient);
+          color: white;
+          border: none;
+          border-radius: 4px;
+          font-family: 'Tajawal', sans-serif;
+          font-weight: 500;
+          cursor: pointer;
+          transition: var(--transition);
+          margin-top: 1rem;
+      }
+
+      .auth-btn:hover {
+          background: linear-gradient(135deg, #2980b9, #27ae60);
+      }
+
+      .auth-footer {
+          text-align: center;
+          margin-top: 1rem;
+          font-size: 0.9rem;
+      }
+
+      .auth-footer a {
+          color: var(--primary-color);
+          text-decoration: none;
+          cursor: pointer;
+      }
+
+      .auth-footer a:hover {
+          text-decoration: underline;
+      }
+
+      .forgot-password {
+          display: block;
+          text-align: right;
+          margin-top: 0.5rem;
+          font-size: 0.8rem;
+          color: #666;
+          text-decoration: none;
+      }
+
+      .forgot-password:hover {
+          color: var(--primary-color);
+      }
+
+      /* Profile Dropdown */
+      .profile-dropdown {
+          position: relative;
+          display: inline-block;
+      }
+
+      .profile-btn {
+          display: flex;
+          align-items: center;
+          background: none;
+          border: none;
+          color: var(--dark-color);
+          cursor: pointer;
+          padding: 0.5rem 1rem;
+          border-radius: 4px;
+          transition: var(--transition);
+      }
+
+      .profile-btn:hover {
+          background-color: rgba(52, 152, 219, 0.1);
+      }
+
+      .profile-img {
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          background: var(--gradient);
+          color: white;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-left: 0.5rem;
+          font-weight: bold;
+      }
+
+      .dropdown-menu {
+          position: absolute;
+          top: 100%;
+          right: 0;
+          background: white;
+          min-width: 200px;
+          box-shadow: var(--box-shadow);
+          border-radius: 4px;
+          padding: 0.5rem 0;
+          z-index: 1000;
+          display: none;
+      }
+
+      .dropdown-menu.show {
+          display: block;
+      }
+
+      .dropdown-item {
+          display: block;
+          padding: 0.5rem 1rem;
+          color: var(--dark-color);
+          text-decoration: none;
+          transition: var(--transition);
+      }
+
+      .dropdown-item:hover {
+          background-color: #f8f9fa;
+      }
+
+      .dropdown-divider {
+          height: 1px;
+          background-color: #eee;
+          margin: 0.5rem 0;
+      }
+
+      .profile-info {
+          padding: 0.5rem 1rem;
+          border-bottom: 1px solid #eee;
+      }
+
+      .profile-info .username {
+          font-weight: bold;
+      }
+
+      .profile-info .email {
+          font-size: 0.8rem;
+          color: #666;
+      }
+
+      /* Loading Spinner */
+      .spinner {
+          display: inline-block;
+          width: 20px;
+          height: 20px;
+          border: 3px solid rgba(255, 255, 255, 0.3);
+          border-radius: 50%;
+          border-top-color: white;
+          animation: spin 1s ease-in-out infinite;
+          margin-right: 5px;
+      }
+
+      @keyframes spin {
+          to { transform: rotate(360deg); }
+      }
     </style>
 </head>
 
@@ -454,6 +705,31 @@
                 <a href="https://devhub-arabic.blogspot.com/" class="nav-link"><i class="fas fa-blog"></i> Blog</a>
                 <a href="https://omarelmallah.pythonanywhere.com/" class="nav-link"><i class="fas fa-robot"></i> AI Tools</a>
                 <a href="https://omar0elmallah.github.io/contact/" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
+                
+                <!-- Auth Buttons (will be shown/hidden based on auth state) -->
+                <div id="authButtons">
+                    <a href="#" class="nav-link cta-button" id="signInBtn"><i class="fas fa-sign-in-alt"></i> Sign In</a>
+                </div>
+                
+                <!-- Profile Dropdown (shown when logged in) -->
+                <div class="profile-dropdown" id="profileDropdown" style="display: none;">
+                    <button class="profile-btn">
+                        <span id="profileInitials" class="profile-img"></span>
+                        <span id="profileUsername"></span>
+                        <i class="fas fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-menu" id="dropdownMenu">
+                        <div class="profile-info">
+                            <div class="username" id="dropdownUsername"></div>
+                            <div class="email" id="dropdownEmail"></div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item" id="changePasswordBtn"><i class="fas fa-key"></i> Change Password</a>
+                        <a href="#" class="dropdown-item" id="editProfileBtn"><i class="fas fa-user-edit"></i> Edit Profile</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item" id="signOutBtn"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+                    </div>
+                </div>
             </div>
             
             <button class="hamburger" id="hamburger">
@@ -479,8 +755,6 @@
                 <button class="tab-btn" data-category="AI">AI</button>
                 <button class="tab-btn" data-category="gaming">Gaming</button>
                 <button class="tab-btn" data-category="media">Media</button>
-
-
                 <button class="tab-btn" data-category="productivity">productivity</button>
             </div>
             
@@ -496,8 +770,6 @@
                 <p>all apps and links for you</p>
             </div>
             
-          
-            
             <div class="footer-contact">
                 <h3><i class="fas fa-mobile"></i>contact</h3>
                 <p><i class="fas fa-envelope"></i>omar.elmallah2001@gmail.com</p>
@@ -506,7 +778,6 @@
                     <a href="https://www.facebook.com/profile.php?id=61577430533360"><i class="fab fa-facebook"></i></a>
                     <a href="https://www.youtube.com/@Taming_Technology"><i class="fab fa-youtube"></i></a>
                     <a href="https://github.com/TAMING-TECHNOLOGY-OFFICAL"><i class="fab fa-github"></i></a>
-                    
                 </div>
             </div>
         </div>
@@ -516,139 +787,801 @@
         </div>
     </footer>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-                const apps = [
-                    {
-                        name: "Nexus AI 2.0.1",
-                        url: "https://omarelmallah.pythonanywhere.com/",
-                        icon: "fas fa-star",
-                        category: "AI",
-                        description: "use new modele of nexus taming`s ai"
-                    },
-                    {
-                        name: "study planner",
-                        url: "https://omar0elmallah.github.io/study-planner/",
-                        icon: "fas fa-clock",
-                        category: "productivity",
-                        description: "make a plan for your study and make time tables"
-                    },
-                    {
-                        name: "Nexus AI 1.5",
-                        url: "https://omar0elmallah.github.io/ai/",
-                        icon: "fas fa-cloud",
-                        category: "AI",
-                        description: "Try the last ver. of our ai"
-                    },
-                    {
-                        name: "DOVERTOR App",
-                        url: "https://omar0elmallah.github.io/dovertor/",
-                        icon: "fas fa-file",
-                        category: "productivity",
-                        description: "convert you files easly with this tool"
-                    },
-                    {
-                        name: "hen jumping",
-                        url: "https://omar0elmallah.github.io/hen-jump/",
-                        icon: "fas fa-cat",
-                        category: "gaming",
-                        description: "play crossy road with modern way"
-                    },
-                    {
-                        name: "DivHub blog",
-                        url: "https://devhub-arabic.blogspot.com/",
-                        icon: "fas fa-users",
-                        category: "media",
-                        description: "your tech blog"
-                    }
-                ];
-
-        const appsGrid = document.getElementById('appsGrid');
-        const tabButtons = document.querySelectorAll('.tab-btn');
-        const searchInput = document.querySelector('.search-box input');
-        const hamburger = document.getElementById('hamburger');
-        const navLinks = document.getElementById('navLinks');
-
-        function displayApps(filter = 'all', searchTerm = '') {
-            appsGrid.innerHTML = '';
+    <!-- Auth Modal -->
+    <div class="auth-modal" id="authModal">
+        <div class="auth-container">
+            <div class="auth-header">
+                <button class="close-modal" id="closeModal">&times;</button>
+                <h2 id="modalTitle">Sign In</h2>
+            </div>
             
-            const filteredApps = apps.filter(app => {
-                const categoryMatch = filter === 'all' || app.category === filter;
-                const searchMatch = app.name.includes(searchTerm) || 
-                                  app.description.includes(searchTerm);
-                return categoryMatch && searchMatch;
-            });
+            <div class="auth-tabs">
+                <div class="auth-tab active" id="signInTab">Sign In</div>
+                <div class="auth-tab" id="signUpTab">Sign Up</div>
+            </div>
             
-            if (filteredApps.length === 0) {
-                appsGrid.innerHTML = '<p class="no-results">لا توجد تطبيقات متطابقة مع بحثك</p>';
-                return;
-            }
-            
-            filteredApps.forEach(app => {
-                const appCard = document.createElement('a');
-                appCard.href = app.url;
-                appCard.className = 'app-card';
-                appCard.target = '_blank';
-                appCard.innerHTML = `
-                    <div class="app-icon">
-                        <i class="${app.icon}"></i>
+            <div class="auth-content">
+                <!-- Sign In Form -->
+                <form class="auth-form active" id="signInForm">
+                    <div class="form-group">
+                        <label for="signInEmail">Email</label>
+                        <input type="email" id="signInEmail" required>
                     </div>
-                    <div class="app-info">
-                        <h3>${app.name}</h3>
-                        <p>${app.description}</p>
-                        <span class="app-category">${getCategoryName(app.category)}</span>
+                    
+                    <div class="form-group">
+                        <label for="signInPassword">Password</label>
+                        <input type="password" id="signInPassword" required>
+                        <a href="#" class="forgot-password" id="forgotPassword">Forgot password?</a>
                     </div>
-                `;
-                appsGrid.appendChild(appCard);
-            });
-        }
-
-        function getCategoryName(category) {
-            const categories = {
-                'AI': 'AI',
+                    
+                    <button type="submit" class="auth-btn" id="signInSubmit">
+                        <span id="signInText">Sign In</span>
+                        <span id="signInSpinner" class="spinner" style="display: none;"></span>
+                    </button>
+                    
+                    <div class="auth-footer">
+                        Don't have an account? <a href="#" id="showSignUp">Sign up</a>
+                    </div>
+                </form>
                 
-                'productivity': 'productivity',
-                'gaming': 'Gaming',
-                'media':'Media'
-            };
-            return categories[category] || category;
-        }
+                <!-- Sign Up Form -->
+                <form class="auth-form" id="signUpForm">
+                    <div class="form-group">
+                        <label for="signUpUsername">Username</label>
+                        <input type="text" id="signUpUsername" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="signUpEmail">Email</label>
+                        <input type="email" id="signUpEmail" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="signUpPassword">Password (min 6 characters)</label>
+                        <input type="password" id="signUpPassword" minlength="6" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="signUpConfirmPassword">Confirm Password</label>
+                        <input type="password" id="signUpConfirmPassword" minlength="6" required>
+                    </div>
+                    
+                    <button type="submit" class="auth-btn" id="signUpSubmit">
+                        <span id="signUpText">Sign Up</span>
+                        <span id="signUpSpinner" class="spinner" style="display: none;"></span>
+                    </button>
+                    
+                    <div class="auth-footer">
+                        Already have an account? <a href="#" id="showSignIn">Sign in</a>
+                    </div>
+                </form>
+                
+                <!-- Forgot Password Form -->
+                <form class="auth-form" id="forgotPasswordForm">
+                    <div class="form-group">
+                        <label for="forgotPasswordEmail">Email</label>
+                        <input type="email" id="forgotPasswordEmail" required>
+                    </div>
+                    
+                    <button type="submit" class="auth-btn" id="forgotPasswordSubmit">
+                        <span id="forgotPasswordText">Reset Password</span>
+                        <span id="forgotPasswordSpinner" class="spinner" style="display: none;"></span>
+                    </button>
+                    
+                    <div class="auth-footer">
+                        Remember your password? <a href="#" id="showSignInFromForgot">Sign in</a>
+                    </div>
+                </form>
+                
+                <!-- Change Password Form -->
+                <form class="auth-form" id="changePasswordForm">
+                    <div class="form-group">
+                        <label for="currentPassword">Current Password</label>
+                        <input type="password" id="currentPassword" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="newPassword">New Password (min 6 characters)</label>
+                        <input type="password" id="newPassword" minlength="6" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirmNewPassword">Confirm New Password</label>
+                        <input type="password" id="confirmNewPassword" minlength="6" required>
+                    </div>
+                    
+                    <button type="submit" class="auth-btn" id="changePasswordSubmit">
+                        <span id="changePasswordText">Change Password</span>
+                        <span id="changePasswordSpinner" class="spinner" style="display: none;"></span>
+                    </button>
+                </form>
+                
+                <!-- Edit Profile Form -->
+                <form class="auth-form" id="editProfileForm">
+                    <div class="form-group">
+                        <label for="editUsername">Username</label>
+                        <input type="text" id="editUsername" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editEmail">Email</label>
+                        <input type="email" id="editEmail" required>
+                    </div>
+                    
+                    <button type="submit" class="auth-btn" id="editProfileSubmit">
+                        <span id="editProfileText">Update Profile</span>
+                        <span id="editProfileSpinner" class="spinner" style="display: none;"></span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 
-        tabButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                tabButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-                const category = button.dataset.category;
-                displayApps(category, searchInput.value);
-            });
-        });
+    <!-- Firebase and other scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
-        searchInput.addEventListener('input', () => {
-            const activeTab = document.querySelector('.tab-btn.active');
-            const category = activeTab ? activeTab.dataset.category : 'all';
-            displayApps(category, searchInput.value);
-        });
+    <script>
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyBfXJ-2tmCYo-pQjfN_4nAdxC-NcqfjAlo",
+        authDomain: "tamec-8f9ea.firebaseapp.com",
+        projectId: "tamec-8f9ea",
+        storageBucket: "tamec-8f9ea.appspot.com",
+        messagingSenderId: "372610375354",
+        appId: "1:372610375354:web:1beaff9695e7b49cdeec83",
+        measurementId: "G-W7TT6VTKSP"
+      };
 
-        hamburger.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            hamburger.innerHTML = navLinks.classList.contains('active') ? 
-                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
-        });
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      const auth = firebase.auth();
+      const database = firebase.database();
 
-        
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', () => {
-                if (window.innerWidth <= 992) {
-                    navLinks.classList.remove('active');
-                    hamburger.innerHTML = '<i class="fas fa-bars"></i>';
-                }
-            });
-        });
+      document.addEventListener('DOMContentLoaded', function() {
+          const apps = [
+              {
+                  name: "Nexus AI 2.0.1",
+                  url: "https://omarelmallah.pythonanywhere.com/",
+                  icon: "fas fa-star",
+                  category: "AI",
+                  description: "use new modele of nexus taming`s ai"
+              },
+              {
+                  name: "study planner",
+                  url: "https://omar0elmallah.github.io/study-planner/",
+                  icon: "fas fa-clock",
+                  category: "productivity",
+                  description: "make a plan for your study and make time tables"
+              },
+              {
+                  name: "Nexus AI 1.5",
+                  url: "https://omar0elmallah.github.io/ai/",
+                  icon: "fas fa-cloud",
+                  category: "AI",
+                  description: "Try the last ver. of our ai"
+              },
+              {
+                  name: "DOVERTOR App",
+                  url: "https://omar0elmallah.github.io/dovertor/",
+                  icon: "fas fa-file",
+                  category: "productivity",
+                  description: "convert you files easly with this tool"
+              },
+              {
+                  name: "hen jumping",
+                  url: "https://omar0elmallah.github.io/hen-jump/",
+                  icon: "fas fa-cat",
+                  category: "gaming",
+                  description: "play crossy road with modern way"
+              },
+              {
+                  name: "DivHub blog",
+                  url: "https://devhub-arabic.blogspot.com/",
+                  icon: "fas fa-users",
+                  category: "media",
+                  description: "your tech blog"
+              }
+          ];
 
-      
-        displayApps();
-    });
-    
+          const appsGrid = document.getElementById('appsGrid');
+          const tabButtons = document.querySelectorAll('.tab-btn');
+          const searchInput = document.querySelector('.search-box input');
+          const hamburger = document.getElementById('hamburger');
+          const navLinks = document.getElementById('navLinks');
+
+          // Auth elements
+          const authModal = document.getElementById('authModal');
+          const closeModal = document.getElementById('closeModal');
+          const signInBtn = document.getElementById('signInBtn');
+          const authButtons = document.getElementById('authButtons');
+          const profileDropdown = document.getElementById('profileDropdown');
+          const dropdownMenu = document.getElementById('dropdownMenu');
+          const profileBtn = document.querySelector('.profile-btn');
+          const signOutBtn = document.getElementById('signOutBtn');
+          const changePasswordBtn = document.getElementById('changePasswordBtn');
+          const editProfileBtn = document.getElementById('editProfileBtn');
+          const profileInitials = document.getElementById('profileInitials');
+          const profileUsername = document.getElementById('profileUsername');
+          const dropdownUsername = document.getElementById('dropdownUsername');
+          const dropdownEmail = document.getElementById('dropdownEmail');
+          
+          // Auth tabs and forms
+          const signInTab = document.getElementById('signInTab');
+          const signUpTab = document.getElementById('signUpTab');
+          const signInForm = document.getElementById('signInForm');
+          const signUpForm = document.getElementById('signUpForm');
+          const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+          const changePasswordForm = document.getElementById('changePasswordForm');
+          const editProfileForm = document.getElementById('editProfileForm');
+          const showSignUp = document.getElementById('showSignUp');
+          const showSignIn = document.getElementById('showSignIn');
+          const forgotPassword = document.getElementById('forgotPassword');
+          const showSignInFromForgot = document.getElementById('showSignInFromForgot');
+          const modalTitle = document.getElementById('modalTitle');
+          
+          // Form inputs
+          const signInEmail = document.getElementById('signInEmail');
+          const signInPassword = document.getElementById('signInPassword');
+          const signUpUsername = document.getElementById('signUpUsername');
+          const signUpEmail = document.getElementById('signUpEmail');
+          const signUpPassword = document.getElementById('signUpPassword');
+          const signUpConfirmPassword = document.getElementById('signUpConfirmPassword');
+          const forgotPasswordEmail = document.getElementById('forgotPasswordEmail');
+          const currentPassword = document.getElementById('currentPassword');
+          const newPassword = document.getElementById('newPassword');
+          const confirmNewPassword = document.getElementById('confirmNewPassword');
+          const editUsername = document.getElementById('editUsername');
+          const editEmail = document.getElementById('editEmail');
+          
+          // Submit buttons
+          const signInSubmit = document.getElementById('signInSubmit');
+          const signUpSubmit = document.getElementById('signUpSubmit');
+          const forgotPasswordSubmit = document.getElementById('forgotPasswordSubmit');
+          const changePasswordSubmit = document.getElementById('changePasswordSubmit');
+          const editProfileSubmit = document.getElementById('editProfileSubmit');
+          
+          // Spinners
+          const signInSpinner = document.getElementById('signInSpinner');
+          const signUpSpinner = document.getElementById('signUpSpinner');
+          const forgotPasswordSpinner = document.getElementById('forgotPasswordSpinner');
+          const changePasswordSpinner = document.getElementById('changePasswordSpinner');
+          const editProfileSpinner = document.getElementById('editProfileSpinner');
+          
+          // Text elements
+          const signInText = document.getElementById('signInText');
+          const signUpText = document.getElementById('signUpText');
+          const forgotPasswordText = document.getElementById('forgotPasswordText');
+          const changePasswordText = document.getElementById('changePasswordText');
+          const editProfileText = document.getElementById('editProfileText');
+
+          function displayApps(filter = 'all', searchTerm = '') {
+              appsGrid.innerHTML = '';
+              
+              const filteredApps = apps.filter(app => {
+                  const categoryMatch = filter === 'all' || app.category === filter;
+                  const searchMatch = app.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                                    app.description.toLowerCase().includes(searchTerm.toLowerCase());
+                  return categoryMatch && searchMatch;
+              });
+              
+              if (filteredApps.length === 0) {
+                  appsGrid.innerHTML = '<p class="no-results">No apps match your search</p>';
+                  return;
+              }
+              
+              filteredApps.forEach(app => {
+                  const appCard = document.createElement('a');
+                  appCard.href = app.url;
+                  appCard.className = 'app-card';
+                  appCard.target = '_blank';
+                  appCard.innerHTML = `
+                      <div class="app-icon">
+                          <i class="${app.icon}"></i>
+                      </div>
+                      <div class="app-info">
+                          <h3>${app.name}</h3>
+                          <p>${app.description}</p>
+                          <span class="app-category">${getCategoryName(app.category)}</span>
+                      </div>
+                  `;
+                  appsGrid.appendChild(appCard);
+              });
+          }
+
+          function getCategoryName(category) {
+              const categories = {
+                  'AI': 'AI',
+                  'productivity': 'Productivity',
+                  'gaming': 'Gaming',
+                  'media': 'Media'
+              };
+              return categories[category] || category;
+          }
+
+          tabButtons.forEach(button => {
+              button.addEventListener('click', () => {
+                  tabButtons.forEach(btn => btn.classList.remove('active'));
+                  button.classList.add('active');
+                  const category = button.dataset.category;
+                  displayApps(category, searchInput.value);
+              });
+          });
+
+          searchInput.addEventListener('input', () => {
+              const activeTab = document.querySelector('.tab-btn.active');
+              const category = activeTab ? activeTab.dataset.category : 'all';
+              displayApps(category, searchInput.value);
+          });
+
+          hamburger.addEventListener('click', () => {
+              navLinks.classList.toggle('active');
+              hamburger.innerHTML = navLinks.classList.contains('active') ? 
+                  '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+          });
+
+          document.querySelectorAll('.nav-link').forEach(link => {
+              link.addEventListener('click', () => {
+                  if (window.innerWidth <= 992) {
+                      navLinks.classList.remove('active');
+                      hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+                  }
+              });
+          });
+
+          // Auth Functions
+          function showAuthModal() {
+              authModal.style.display = 'flex';
+              document.body.style.overflow = 'hidden';
+          }
+
+          function hideAuthModal() {
+              authModal.style.display = 'none';
+              document.body.style.overflow = 'auto';
+              resetForms();
+          }
+
+          function resetForms() {
+              // Clear all forms
+              signInForm.reset();
+              signUpForm.reset();
+              forgotPasswordForm.reset();
+              changePasswordForm.reset();
+              editProfileForm.reset();
+              
+              // Show sign in form by default
+              showForm('signIn');
+          }
+
+          function showForm(formName) {
+              // Hide all forms
+              signInForm.classList.remove('active');
+              signUpForm.classList.remove('active');
+              forgotPasswordForm.classList.remove('active');
+              changePasswordForm.classList.remove('active');
+              editProfileForm.classList.remove('active');
+              
+              // Update tabs
+              signInTab.classList.remove('active');
+              signUpTab.classList.remove('active');
+              
+              // Show the requested form
+              switch(formName) {
+                  case 'signIn':
+                      signInForm.classList.add('active');
+                      signInTab.classList.add('active');
+                      modalTitle.textContent = 'Sign In';
+                      break;
+                  case 'signUp':
+                      signUpForm.classList.add('active');
+                      signUpTab.classList.add('active');
+                      modalTitle.textContent = 'Sign Up';
+                      break;
+                  case 'forgotPassword':
+                      forgotPasswordForm.classList.add('active');
+                      modalTitle.textContent = 'Reset Password';
+                      break;
+                  case 'changePassword':
+                      changePasswordForm.classList.add('active');
+                      modalTitle.textContent = 'Change Password';
+                      break;
+                  case 'editProfile':
+                      editProfileForm.classList.add('active');
+                      modalTitle.textContent = 'Edit Profile';
+                      break;
+              }
+          }
+
+          function toggleLoading(button, isLoading) {
+              const spinner = button.querySelector('.spinner');
+              const text = button.querySelector('span:not(.spinner)');
+              
+              if (isLoading) {
+                  spinner.style.display = 'inline-block';
+                  text.style.display = 'none';
+                  button.disabled = true;
+              } else {
+                  spinner.style.display = 'none';
+                  text.style.display = 'inline';
+                  button.disabled = false;
+              }
+          }
+
+          function updateUI(user) {
+              if (user) {
+                  // User is signed in
+                  authButtons.style.display = 'none';
+                  profileDropdown.style.display = 'block';
+                  
+                  // Get user data from database
+                  database.ref('users/' + user.uid).once('value').then((snapshot) => {
+                      const userData = snapshot.val();
+                      if (userData) {
+                          const username = userData.username || 'User';
+                          const email = user.email;
+                          
+                          // Update profile info
+                          const initials = username.charAt(0).toUpperCase();
+                          profileInitials.textContent = initials;
+                          profileUsername.textContent = username;
+                          dropdownUsername.textContent = username;
+                          dropdownEmail.textContent = email;
+                          
+                          // Pre-fill edit profile form
+                          editUsername.value = username;
+                          editEmail.value = email;
+                      }
+                  });
+              } else {
+                  // User is signed out
+                  authButtons.style.display = 'block';
+                  profileDropdown.style.display = 'none';
+              }
+          }
+
+          function getInitials(name) {
+              return name.split(' ').map(part => part.charAt(0).join('').toUpperCase();
+          }
+
+          // Event Listeners for Auth
+          closeModal.addEventListener('click', hideAuthModal);
+          signInBtn.addEventListener('click', (e) => {
+              e.preventDefault();
+              showAuthModal();
+              showForm('signIn');
+          });
+
+          // Click outside modal to close
+          authModal.addEventListener('click', (e) => {
+              if (e.target === authModal) {
+                  hideAuthModal();
+              }
+          });
+
+          // Tab switching
+          signInTab.addEventListener('click', () => showForm('signIn'));
+          signUpTab.addEventListener('click', () => showForm('signUp'));
+          showSignUp.addEventListener('click', (e) => {
+              e.preventDefault();
+              showForm('signUp');
+          });
+          showSignIn.addEventListener('click', (e) => {
+              e.preventDefault();
+              showForm('signIn');
+          });
+          showSignInFromForgot.addEventListener('click', (e) => {
+              e.preventDefault();
+              showForm('signIn');
+          });
+
+          // Forgot password
+          forgotPassword.addEventListener('click', (e) => {
+              e.preventDefault();
+              showForm('forgotPassword');
+          });
+
+          // Profile dropdown
+          profileBtn.addEventListener('click', () => {
+              dropdownMenu.classList.toggle('show');
+          });
+
+          // Close dropdown when clicking outside
+          window.addEventListener('click', (e) => {
+              if (!e.target.matches('.profile-btn') && !e.target.matches('.profile-btn *')) {
+                  if (dropdownMenu.classList.contains('show')) {
+                      dropdownMenu.classList.remove('show');
+                  }
+              }
+          });
+
+          // Sign out
+          signOutBtn.addEventListener('click', (e) => {
+              e.preventDefault();
+              auth.signOut().then(() => {
+                  Swal.fire({
+                      icon: 'success',
+                      title: 'Signed out successfully',
+                      showConfirmButton: false,
+                      timer: 1500
+                  });
+                  hideAuthModal();
+                  dropdownMenu.classList.remove('show');
+              }).catch((error) => {
+                  Swal.fire({
+                      icon: 'error',
+                      title: 'Error',
+                      text: error.message
+                  });
+              });
+          });
+
+          // Change password
+          changePasswordBtn.addEventListener('click', (e) => {
+              e.preventDefault();
+              showAuthModal();
+              showForm('changePassword');
+              dropdownMenu.classList.remove('show');
+          });
+
+          // Edit profile
+          editProfileBtn.addEventListener('click', (e) => {
+              e.preventDefault();
+              showAuthModal();
+              showForm('editProfile');
+              dropdownMenu.classList.remove('show');
+          });
+
+          // Sign in form submission
+          signInForm.addEventListener('submit', (e) => {
+              e.preventDefault();
+              const email = signInEmail.value;
+              const password = signInPassword.value;
+              
+              toggleLoading(signInSubmit, true);
+              
+              auth.signInWithEmailAndPassword(email, password)
+                  .then((userCredential) => {
+                      Swal.fire({
+                          icon: 'success',
+                          title: 'Signed in successfully',
+                          showConfirmButton: false,
+                          timer: 1500
+                      });
+                      hideAuthModal();
+                  })
+                  .catch((error) => {
+                      Swal.fire({
+                          icon: 'error',
+                          title: 'Sign In Error',
+                          text: error.message
+                      });
+                  })
+                  .finally(() => {
+                      toggleLoading(signInSubmit, false);
+                  });
+          });
+
+          // Sign up form submission
+          signUpForm.addEventListener('submit', (e) => {
+              e.preventDefault();
+              const username = signUpUsername.value;
+              const email = signUpEmail.value;
+              const password = signUpPassword.value;
+              const confirmPassword = signUpConfirmPassword.value;
+              
+              if (password !== confirmPassword) {
+                  Swal.fire({
+                      icon: 'error',
+                      title: 'Error',
+                      text: 'Passwords do not match'
+                  });
+                  return;
+              }
+              
+              if (password.length < 6) {
+                  Swal.fire({
+                      icon: 'error',
+                      title: 'Error',
+                      text: 'Password must be at least 6 characters'
+                  });
+                  return;
+              }
+              
+              toggleLoading(signUpSubmit, true);
+              
+              auth.createUserWithEmailAndPassword(email, password)
+                  .then((userCredential) => {
+                      // Save additional user info to database
+                      return database.ref('users/' + userCredential.user.uid).set({
+                          username: username,
+                          email: email,
+                          createdAt: firebase.database.ServerValue.TIMESTAMP
+                      });
+                  })
+                  .then(() => {
+                      Swal.fire({
+                          icon: 'success',
+                          title: 'Account created successfully',
+                          showConfirmButton: false,
+                          timer: 1500
+                      });
+                      hideAuthModal();
+                  })
+                  .catch((error) => {
+                      Swal.fire({
+                          icon: 'error',
+                          title: 'Sign Up Error',
+                          text: error.message
+                      });
+                  })
+                  .finally(() => {
+                      toggleLoading(signUpSubmit, false);
+                  });
+          });
+
+          // Forgot password form submission
+          forgotPasswordForm.addEventListener('submit', (e) => {
+              e.preventDefault();
+              const email = forgotPasswordEmail.value;
+              
+              toggleLoading(forgotPasswordSubmit, true);
+              
+              auth.sendPasswordResetEmail(email)
+                  .then(() => {
+                      Swal.fire({
+                          icon: 'success',
+                          title: 'Password reset email sent',
+                          text: 'Check your email for instructions to reset your password'
+                      });
+                      showForm('signIn');
+                  })
+                  .catch((error) => {
+                      Swal.fire({
+                          icon: 'error',
+                          title: 'Error',
+                          text: error.message
+                      });
+                  })
+                  .finally(() => {
+                      toggleLoading(forgotPasswordSubmit, false);
+                  });
+          });
+
+          // Change password form submission
+          changePasswordForm.addEventListener('submit', (e) => {
+              e.preventDefault();
+              const currentPwd = currentPassword.value;
+              const newPwd = newPassword.value;
+              const confirmPwd = confirmNewPassword.value;
+              
+              if (newPwd !== confirmPwd) {
+                  Swal.fire({
+                      icon: 'error',
+                      title: 'Error',
+                      text: 'New passwords do not match'
+                  });
+                  return;
+              }
+              
+              if (newPwd.length < 6) {
+                  Swal.fire({
+                      icon: 'error',
+                      title: 'Error',
+                      text: 'Password must be at least 6 characters'
+                  });
+                  return;
+              }
+              
+              toggleLoading(changePasswordSubmit, true);
+              
+              const user = auth.currentUser;
+              const credential = firebase.auth.EmailAuthProvider.credential(
+                  user.email,
+                  currentPwd
+              );
+              
+              user.reauthenticateWithCredential(credential)
+                  .then(() => {
+                      return user.updatePassword(newPwd);
+                  })
+                  .then(() => {
+                      Swal.fire({
+                          icon: 'success',
+                          title: 'Password changed successfully',
+                          showConfirmButton: false,
+                          timer: 1500
+                      });
+                      hideAuthModal();
+                  })
+                  .catch((error) => {
+                      Swal.fire({
+                          icon: 'error',
+                          title: 'Error',
+                          text: error.message
+                      });
+                  })
+                  .finally(() => {
+                      toggleLoading(changePasswordSubmit, false);
+                  });
+          });
+
+          // Edit profile form submission
+          editProfileForm.addEventListener('submit', (e) => {
+              e.preventDefault();
+              const username = editUsername.value;
+              const email = editEmail.value;
+              
+              toggleLoading(editProfileSubmit, true);
+              
+              const user = auth.currentUser;
+              const updates = {};
+              
+              // Update username in database
+              updates['/users/' + user.uid + '/username'] = username;
+              
+              // Update email in auth and database if changed
+              if (email !== user.email) {
+                  user.updateEmail(email)
+                      .then(() => {
+                          updates['/users/' + user.uid + '/email'] = email;
+                          return database.ref().update(updates);
+                      })
+                      .then(() => {
+                          Swal.fire({
+                              icon: 'success',
+                              title: 'Profile updated successfully',
+                              showConfirmButton: false,
+                              timer: 1500
+                          });
+                          hideAuthModal();
+                      })
+                      .catch((error) => {
+                          Swal.fire({
+                              icon: 'error',
+                              title: 'Error',
+                              text: error.message
+                          });
+                      })
+                      .finally(() => {
+                          toggleLoading(editProfileSubmit, false);
+                      });
+              } else {
+                  // Only update username
+                  database.ref().update(updates)
+                      .then(() => {
+                          Swal.fire({
+                              icon: 'success',
+                              title: 'Profile updated successfully',
+                              showConfirmButton: false,
+                              timer: 1500
+                          });
+                          hideAuthModal();
+                      })
+                      .catch((error) => {
+                          Swal.fire({
+                              icon: 'error',
+                              title: 'Error',
+                              text: error.message
+                          });
+                      })
+                      .finally(() => {
+                          toggleLoading(editProfileSubmit, false);
+                      });
+              }
+          });
+
+          // Auth state observer
+          auth.onAuthStateChanged((user) => {
+              updateUI(user);
+          });
+
+          // Initialize the app
+          displayApps();
+      });
     </script>
 </body>
 </html>
