@@ -690,6 +690,13 @@
       @keyframes spin {
           to { transform: rotate(360deg); }
       }
+
+      .no-results {
+          grid-column: 1 / -1;
+          text-align: center;
+          padding: 2rem;
+          color: #666;
+      }
     </style>
 </head>
 
@@ -759,6 +766,7 @@
             </div>
             
             <div class="apps-grid" id="appsGrid">
+                <!-- Apps will be loaded here by JavaScript -->
             </div>
         </section>
     </main>
@@ -1241,10 +1249,6 @@
                   authButtons.style.display = 'block';
                   profileDropdown.style.display = 'none';
               }
-          }
-
-          function getInitials(name) {
-              return name.split(' ').map(part => part.charAt(0).join('').toUpperCase();
           }
 
           // Event Listeners for Auth
